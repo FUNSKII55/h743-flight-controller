@@ -35,6 +35,7 @@ fc\motor_control.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h
 fc\motor_control.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h
 fc\motor_control.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h
 fc\motor_control.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h
+fc\motor_control.o: ../Inc/tim.h
 fc\motor_control.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 fc\motor_control.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 fc\motor_control.o: ../Inc/FreeRTOSConfig.h
@@ -46,4 +47,3 @@ fc\motor_control.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrapp
 fc\motor_control.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 fc\motor_control.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 fc\motor_control.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
-fc\motor_control.o: ../Inc/tim.h

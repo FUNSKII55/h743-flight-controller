@@ -1,7 +1,7 @@
 Dependencies for Project 'FC', Target 'FC': (DO NOT MODIFY !)
 CompilerVersion: 5050106::V5.05 update 1 (build 106)::.\ARMCC
-F (startup_stm32h743xx.s)(0x69E9B7E4)(--cpu Cortex-M7.fp.dp -g --apcs=interwork -I ../Inc-I.\RTE\_FC-I"E:\Applications\Coding & Environmental Application\keil\pack\ARM\CMSIS\6.1.0\CMSIS\Core\Include"--pd "__UVISION_VERSION SETA 542" --pd "STM32H743xx SETA 1" --pd "_RTE_ SETA 1"--list startup_stm32h743xx.lst --xref -o fc\startup_stm32h743xx.o --depend fc\startup_stm32h743xx.d)
-F (../Src/Motor_Control.c)(0x69E9EBDA)(--c99 --gnu -c --cpu Cortex-M7.fp.dp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../Drivers/CMSIS/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F-I.\RTE\_FC-I"E:\Applications\Coding & Environmental Application\keil\pack\ARM\CMSIS\6.1.0\CMSIS\Core\Include"-D__UVISION_VERSION="542" -DSTM32H743xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32H743xx-o fc\motor_control.o --omf_browse fc\motor_control.crf --depend fc\motor_control.d)
+F (startup_stm32h743xx.s)(0x69EA29E7)(--cpu Cortex-M7.fp.dp -g --apcs=interwork -I ../Inc-I.\RTE\_FC-I"E:\Applications\Coding & Environmental Application\keil\pack\ARM\CMSIS\6.1.0\CMSIS\Core\Include"--pd "__UVISION_VERSION SETA 542" --pd "STM32H743xx SETA 1" --pd "_RTE_ SETA 1"--list startup_stm32h743xx.lst --xref -o fc\startup_stm32h743xx.o --depend fc\startup_stm32h743xx.d)
+F (../Src/Motor_Control.c)(0x69EA2F6E)(--c99 --gnu -c --cpu Cortex-M7.fp.dp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../Drivers/CMSIS/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F-I.\RTE\_FC-I"E:\Applications\Coding & Environmental Application\keil\pack\ARM\CMSIS\6.1.0\CMSIS\Core\Include"-D__UVISION_VERSION="542" -DSTM32H743xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32H743xx-o fc\motor_control.o --omf_browse fc\motor_control.crf --depend fc\motor_control.d)
 I (../Inc/Motor_Control.h)(0x69E8E3EC)
 I (../Inc/main.h)(0x69E9B7E2)
 I (../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h)(0x69104676)
@@ -37,6 +37,7 @@ I (../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h)(0x69104676)
 I (../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h)(0x69104676)
 I (../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h)(0x69104676)
 I (../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h)(0x69104676)
+I (../Inc/tim.h)(0x69E8D2E2)
 I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h)(0x6910462E)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h)(0x6910462E)
 I (../Inc/FreeRTOSConfig.h)(0x69E9B75A)
@@ -48,8 +49,7 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h)(0x6910462E
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/task.h)(0x6910462E)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x6910462E)
 I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h)(0x6910462E)
-I (../Inc/tim.h)(0x69E8D2E2)
-F (../Src/main.c)(0x69E9C0E0)(--c99 --gnu -c --cpu Cortex-M7.fp.dp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../Drivers/CMSIS/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F-I.\RTE\_FC-I"E:\Applications\Coding & Environmental Application\keil\pack\ARM\CMSIS\6.1.0\CMSIS\Core\Include"-D__UVISION_VERSION="542" -DSTM32H743xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32H743xx-o fc\main.o --omf_browse fc\main.crf --depend fc\main.d)
+F (../Src/main.c)(0x69EA29E5)(--c99 --gnu -c --cpu Cortex-M7.fp.dp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../Drivers/CMSIS/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F-I.\RTE\_FC-I"E:\Applications\Coding & Environmental Application\keil\pack\ARM\CMSIS\6.1.0\CMSIS\Core\Include"-D__UVISION_VERSION="542" -DSTM32H743xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32H743xx-o fc\main.o --omf_browse fc\main.crf --depend fc\main.d)
 I (../Inc/main.h)(0x69E9B7E2)
 I (../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h)(0x69104676)
 I (../Inc/stm32h7xx_hal_conf.h)(0x69E8D2E3)
@@ -135,7 +135,7 @@ I (../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h)(0x69104676)
 I (../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h)(0x69104676)
 I (../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h)(0x69104676)
 I (../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h)(0x69104676)
-F (../Src/freertos.c)(0x69E9D9FB)(--c99 --gnu -c --cpu Cortex-M7.fp.dp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../Drivers/CMSIS/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F-I.\RTE\_FC-I"E:\Applications\Coding & Environmental Application\keil\pack\ARM\CMSIS\6.1.0\CMSIS\Core\Include"-D__UVISION_VERSION="542" -DSTM32H743xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32H743xx-o fc\freertos.o --omf_browse fc\freertos.crf --depend fc\freertos.d)
+F (../Src/freertos.c)(0x69EA29E2)(--c99 --gnu -c --cpu Cortex-M7.fp.dp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../Drivers/CMSIS/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F-I.\RTE\_FC-I"E:\Applications\Coding & Environmental Application\keil\pack\ARM\CMSIS\6.1.0\CMSIS\Core\Include"-D__UVISION_VERSION="542" -DSTM32H743xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32H743xx-o fc\freertos.o --omf_browse fc\freertos.crf --depend fc\freertos.d)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h)(0x6910462E)
 I (E:\Applications\Coding & Environmental Application\keil\core\ARM\ARMCC\include\stddef.h)(0x686EB413)
 I (E:\Applications\Coding & Environmental Application\keil\core\ARM\ARMCC\include\stdint.h)(0x686EB413)
@@ -218,7 +218,7 @@ I (../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h)(0x69104676)
 I (../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h)(0x69104676)
 I (../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h)(0x69104676)
 I (../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h)(0x69104676)
-F (../Src/tim.c)(0x69E9B2EE)(--c99 --gnu -c --cpu Cortex-M7.fp.dp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../Drivers/CMSIS/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F-I.\RTE\_FC-I"E:\Applications\Coding & Environmental Application\keil\pack\ARM\CMSIS\6.1.0\CMSIS\Core\Include"-D__UVISION_VERSION="542" -DSTM32H743xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32H743xx-o fc\tim.o --omf_browse fc\tim.crf --depend fc\tim.d)
+F (../Src/tim.c)(0x69EA29E3)(--c99 --gnu -c --cpu Cortex-M7.fp.dp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc -I ../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../Drivers/CMSIS/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F-I.\RTE\_FC-I"E:\Applications\Coding & Environmental Application\keil\pack\ARM\CMSIS\6.1.0\CMSIS\Core\Include"-D__UVISION_VERSION="542" -DSTM32H743xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32H743xx-o fc\tim.o --omf_browse fc\tim.crf --depend fc\tim.d)
 I (../Inc/tim.h)(0x69E8D2E2)
 I (../Inc/main.h)(0x69E9B7E2)
 I (../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h)(0x69104676)
