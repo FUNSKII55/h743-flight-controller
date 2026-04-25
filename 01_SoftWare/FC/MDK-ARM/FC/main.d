@@ -32,8 +32,13 @@ fc\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h
 fc\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c_ex.h
 fc\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h
 fc\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h
+fc\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h
+fc\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi_ex.h
 fc\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h
 fc\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h
+fc\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd.h
+fc\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h
+fc\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h
 fc\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 fc\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 fc\main.o: ../Inc/FreeRTOSConfig.h
@@ -46,6 +51,14 @@ fc\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 fc\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 fc\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 fc\main.o: ../Inc/dma.h
+fc\main.o: ../Inc/i2c.h
+fc\main.o: ../Inc/spi.h
 fc\main.o: ../Inc/tim.h
+fc\main.o: ../Inc/usb_device.h
+fc\main.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h
+fc\main.o: ../Inc/usbd_conf.h
+fc\main.o: E:\Applications\Coding & Environmental Application\keil\core\ARM\ARMCC\Bin\..\include\stdio.h
+fc\main.o: E:\Applications\Coding & Environmental Application\keil\core\ARM\ARMCC\Bin\..\include\stdlib.h
+fc\main.o: E:\Applications\Coding & Environmental Application\keil\core\ARM\ARMCC\Bin\..\include\string.h
 fc\main.o: ../Inc/gpio.h
 fc\main.o: ../Inc/Motor_Control.h

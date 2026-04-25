@@ -22,9 +22,9 @@
 
 /* 解锁前持续发 0 油门的时间 */
 #define ARM_MS         3000U
-#define FRAME_MS       1U
+#define FRAME_MS       1U				//帧发送周期（ms）
 
-/* 测试油门，刚好能转起来但不危险 */
+/* 测试油门 */
 #define TEST_THR       60U
 
 /* ------------------------------------------------------------------ */
@@ -56,7 +56,7 @@ static void fill_tim3(uint8_t ch, uint16_t thr)
     }
     for (uint8_t i = DS_BITS; i < DS_BUFLEN; i++) tim3_buf[ch][i] = 0;
 }
-
+//fill_tim5 和 fill_tim3 逻辑完全一样，只是写入的目标 buffer 不同（tim5_buf 是 uint32_t，因为 TIM5 的 CCR 是 32 位寄存器）
 static void fill_tim5(uint8_t ch, uint16_t thr)
 {
     uint16_t pkt = make_packet(thr);
@@ -195,12 +195,15 @@ void Motor_Test_Run(void)
 
     /* 持续发小油门，观察电机是否正常旋转 */
     while (1) {
+			
         send_frame(TEST_THR);
-        if (osKernelGetState() == osKernelRunning) {
+        if (osKernelGetState() == osKernelRunning)
+					{
             next_tick += FRAME_MS;
             osDelayUntil(next_tick);
-        } else {
+					} else {
             HAL_Delay(FRAME_MS);
-        }
-    }
+								 }
+				
+							}
 }

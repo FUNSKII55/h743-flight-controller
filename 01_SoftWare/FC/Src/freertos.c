@@ -61,6 +61,13 @@ const osThreadAttr_t LED_Control_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
+/* Definitions for Attitude_Algori */
+osThreadId_t Attitude_AlgoriHandle;
+const osThreadAttr_t Attitude_Algori_attributes = {
+  .name = "Attitude_Algori",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityLow,
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -69,6 +76,7 @@ const osThreadAttr_t LED_Control_attributes = {
 
 void StartDefaultTask(void *argument);
 void StartTask02(void *argument);
+void StartTask03(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -104,6 +112,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of LED_Control */
   LED_ControlHandle = osThreadNew(StartTask02, NULL, &LED_Control_attributes);
+
+  /* creation of Attitude_Algori */
+  Attitude_AlgoriHandle = osThreadNew(StartTask03, NULL, &Attitude_Algori_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -152,9 +163,27 @@ void StartTask02(void *argument)
 		
 		HAL_GPIO_TogglePin(GPIOE,LED0_Pin);
 		
-    osDelay(100);
+    osDelay(500);
   }
   /* USER CODE END StartTask02 */
+}
+
+/* USER CODE BEGIN Header_StartTask03 */
+/**
+* @brief Function implementing the Attitude_Algori thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartTask03 */
+void StartTask03(void *argument)
+{
+  /* USER CODE BEGIN StartTask03 */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartTask03 */
 }
 
 /* Private application code --------------------------------------------------*/
