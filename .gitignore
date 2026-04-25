@@ -1,0 +1,22 @@
+04_Materials/
+
+# Keil / MDK
+*.o
+*.d
+*.crf
+*.axf
+*.hex
+*.map
+*.lst
+*.dep
+*.uvgui.*
+*.bak
+
+# CubeMX / build logs
+*.build_log.htm
+
+# OS
+.DS_Store
+Thumbs.db
+
+01_SoftWare/FC/MDK-ARM/FC/

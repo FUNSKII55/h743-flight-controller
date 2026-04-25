@@ -32,6 +32,23 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
+/* Line coding: default 115200 8N1 */
+static USBD_CDC_LineCodingTypeDef LineCoding = {
+  115200, /* dwDTERate   */
+  0x00,   /* bCharFormat: 1 stop bit */
+  0x00,   /* bParityType: none */
+  0x08    /* bDataBits:   8 */
+};
+
+/* DTR state: set when host opens the COM port */
+static volatile uint8_t cdc_dtr_state = 0;
+
+/* Receive ring buffer */
+#define CDC_RX_RING_SIZE  2048
+static uint8_t  cdc_rx_ring[CDC_RX_RING_SIZE];
+static volatile uint16_t cdc_rx_head = 0;
+static volatile uint16_t cdc_rx_tail = 0;
+
 /* USER CODE END PV */
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
@@ -220,15 +237,29 @@ static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
   /* 6      | bDataBits  |   1   | Number Data bits (5, 6, 7, 8 or 16).          */
   /*******************************************************************************/
     case CDC_SET_LINE_CODING:
-
+      if (length == 7U)
+      {
+        LineCoding.bitrate    = (uint32_t)(pbuf[0] | (pbuf[1] << 8) |
+                                           (pbuf[2] << 16) | (pbuf[3] << 24));
+        LineCoding.format     = pbuf[4];
+        LineCoding.paritytype = pbuf[5];
+        LineCoding.datatype   = pbuf[6];
+      }
     break;
 
     case CDC_GET_LINE_CODING:
-
+      pbuf[0] = (uint8_t)(LineCoding.bitrate);
+      pbuf[1] = (uint8_t)(LineCoding.bitrate >> 8);
+      pbuf[2] = (uint8_t)(LineCoding.bitrate >> 16);
+      pbuf[3] = (uint8_t)(LineCoding.bitrate >> 24);
+      pbuf[4] = LineCoding.format;
+      pbuf[5] = LineCoding.paritytype;
+      pbuf[6] = LineCoding.datatype;
     break;
 
     case CDC_SET_CONTROL_LINE_STATE:
-
+      /* bit 0 = DTR, bit 1 = RTS */
+      cdc_dtr_state = (pbuf != NULL) ? (((USBD_SetupReqTypedef *)pbuf)->wValue & 0x01U) : 0U;
     break;
 
     case CDC_SEND_BREAK:
@@ -261,6 +292,15 @@ static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
 static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 {
   /* USER CODE BEGIN 6 */
+  uint32_t len = *Len;
+  for (uint32_t i = 0; i < len; i++)
+  {
+    uint16_t next = (cdc_rx_head + 1U) % CDC_RX_RING_SIZE;
+    if (next == cdc_rx_tail)
+      break;  /* ring full, drop remaining bytes */
+    cdc_rx_ring[cdc_rx_head] = Buf[i];
+    cdc_rx_head = next;
+  }
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
   return (USBD_OK);
@@ -316,6 +356,30 @@ static int8_t CDC_TransmitCplt_FS(uint8_t *Buf, uint32_t *Len, uint8_t epnum)
 }
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_IMPLEMENTATION */
+
+uint16_t CDC_GetRxCount(void)
+{
+  int32_t count = (int32_t)cdc_rx_head - (int32_t)cdc_rx_tail;
+  if (count < 0)
+    count += CDC_RX_RING_SIZE;
+  return (uint16_t)count;
+}
+
+uint16_t CDC_ReadRxData(uint8_t *buf, uint16_t maxLen)
+{
+  uint16_t count = 0;
+  while (count < maxLen && cdc_rx_tail != cdc_rx_head)
+  {
+    buf[count++] = cdc_rx_ring[cdc_rx_tail];
+    cdc_rx_tail = (cdc_rx_tail + 1U) % CDC_RX_RING_SIZE;
+  }
+  return count;
+}
+
+uint8_t CDC_IsConnected(void)
+{
+  return (hUsbDeviceFS.dev_state == USBD_STATE_CONFIGURED && cdc_dtr_state != 0) ? 1U : 0U;
+}
 
 /* USER CODE END PRIVATE_FUNCTIONS_IMPLEMENTATION */
 
