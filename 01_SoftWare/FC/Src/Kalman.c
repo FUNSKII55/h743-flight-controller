@@ -2,6 +2,7 @@
 
 #include <math.h>
 #include <stddef.h>
+#include "cmsis_os.h"
 #include "ICM42688P.h"
 #include "IST8310.h"
 
@@ -10,6 +11,7 @@
 #define DEG_TO_RAD               0.0174532925f
 #define YAW_GYRO_DEADBAND_DPS    0.30f
 #define YAW_MAG_BLEND            0.25f
+#define GYRO_BIAS_DISCARD_COUNT  50U
 
 typedef struct
 {
@@ -52,6 +54,7 @@ static float Kalman_NormalizeAngle180(float angle);
 static float Kalman_BlendAngle180(float current, float target, float alpha);
 static float Kalman1D_Predict(Kalman1D_t *kalman, float new_rate, float dt);
 static float Kalman1D_Update(Kalman1D_t *kalman, float new_angle, float new_rate, float dt);
+static void Kalman_DelayMs(uint32_t delay_ms);
 
 void Kalman_Init(void)
 {
@@ -90,6 +93,12 @@ void Kalman_CalibrateGyroBias(uint16_t sample_count, uint32_t sample_delay_ms)
     return;
   }
 
+  for (uint16_t i = 0U; i < GYRO_BIAS_DISCARD_COUNT; i++)
+  {
+    ICM42688P_ReadGyroRaw(&gx, &gy, &gz);
+    Kalman_DelayMs(sample_delay_ms);
+  }
+
   /* 上电静止采样陀螺仪零偏，避免 yaw 开机先漂再被磁力计拉回。 */
   for (uint16_t i = 0U; i < sample_count; i++)
   {
@@ -100,7 +109,7 @@ void Kalman_CalibrateGyroBias(uint16_t sample_count, uint32_t sample_delay_ms)
 
     if (sample_delay_ms > 0U)
     {
-      HAL_Delay(sample_delay_ms);
+      Kalman_DelayMs(sample_delay_ms);
     }
   }
 
@@ -349,4 +358,21 @@ static float Kalman1D_Update(Kalman1D_t *kalman, float new_angle, float new_rate
   kalman->p11 -= k1 * p01_temp;
 
   return kalman->angle;
+}
+
+static void Kalman_DelayMs(uint32_t delay_ms)
+{
+  if (delay_ms == 0U)
+  {
+    return;
+  }
+
+  if (osKernelGetState() == osKernelRunning)
+  {
+    osDelay(delay_ms);
+  }
+  else
+  {
+    HAL_Delay(delay_ms);
+  }
 }

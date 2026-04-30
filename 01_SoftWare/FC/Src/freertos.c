@@ -31,6 +31,7 @@
 #include "Kalman.h"
 #include "PID_LOOP.h"
 #include "crsf.h"
+#include "dfu.h"
 #include "../Peripherals/uart.h"
 #include <stdio.h>
 #include <limits.h>
@@ -164,6 +165,7 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
+    DFU_CheckCommand();
     CRSF_Update();
     osDelay(1);
   }
@@ -207,7 +209,11 @@ void StartTask03(void *argument)
   float gyro_x_dps = 0.0f;
   float gyro_y_dps = 0.0f;
   float gyro_z_dps = 0.0f;
-  char tx_buf[128];
+  uint16_t motor1 = 0U;
+  uint16_t motor2 = 0U;
+  uint16_t motor3 = 0U;
+  uint16_t motor4 = 0U;
+  char tx_buf[256];
   int tx_len = 0;
 
   (void)ICM42688P_Init();
@@ -234,24 +240,19 @@ void StartTask03(void *argument)
     (void)Kalman_GetAttitude(&pitch_cd, &roll_cd, &yaw_cd);
     Kalman_GetGyroDps(&gyro_x_dps, &gyro_y_dps, &gyro_z_dps);
     PID_LOOP_UpdateAttitude(pitch_cd, roll_cd, yaw_cd, gyro_x_dps, gyro_y_dps, gyro_z_dps);
+    PID_LOOP_GetMotorOutput(&motor1, &motor2, &motor3, &motor4);
     tx_len = snprintf(tx_buf, sizeof(tx_buf),
-                      "crsf=%u,init=%u,st=%u,rxs=%u,ue=%lu,ds=%u,de=%lu,byte=%lu,pos=%u,last=%02X,frame=%u,err=%u,ch1=%u,ch2=%u,ch3=%u,ch4=%u\r\n",
-                      CRSF_IsConnected(),
-                      CRSF_GetInitOk(),
-                      CRSF_GetInitStatus(),
-                      CRSF_GetUartRxState(),
-                      (unsigned long)CRSF_GetUartError(),
-                      CRSF_GetDmaState(),
-                      (unsigned long)CRSF_GetDmaError(),
-                      (unsigned long)CRSF_GetByteCount(),
-                      CRSF_GetDmaPos(),
-                      CRSF_GetLastByte(),
-                      CRSF_GetFrameCount(),
-                      CRSF_GetErrorCount(),
-                      CRSF_GetChannelUs(0),
-                      CRSF_GetChannelUs(1),
-                      CRSF_GetChannelUs(2),
-                      CRSF_GetChannelUs(3));
+                      "crsf=%u arm=%u frame=%u err=%u ch1=%u ch2=%u ch3=%u ch4=%u ch5=%u ch6=%u\r\n",
+                      (unsigned int)CRSF_IsConnected(),
+                      (unsigned int)PID_LOOP_IsArmed(),
+                      (unsigned int)CRSF_GetFrameCount(),
+                      (unsigned int)CRSF_GetErrorCount(),
+                      (unsigned int)CRSF_GetChannelUs(0),
+                      (unsigned int)CRSF_GetChannelUs(1),
+                      (unsigned int)CRSF_GetChannelUs(2),
+                      (unsigned int)CRSF_GetChannelUs(3),
+                      (unsigned int)CRSF_GetChannelUs(4),
+                      (unsigned int)CRSF_GetChannelUs(5));
     if (tx_len > 0)
     {
       (void)UART_SendBuffer((const uint8_t *)tx_buf, (uint16_t)tx_len);

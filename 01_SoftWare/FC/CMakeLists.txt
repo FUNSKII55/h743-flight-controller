@@ -52,6 +52,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Src/Kalman.c
     Src/PID_LOOP.c
     Src/crsf.c
+    Src/dfu.c
     Peripherals/uart.c
     Peripherals/ICM42688P.c
     Peripherals/IST8310.c

@@ -30,6 +30,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Motor_Control.h"
+#include "dfu.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -75,6 +76,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+  DFU_CheckBootRequest();
 
   /* USER CODE END 1 */
 

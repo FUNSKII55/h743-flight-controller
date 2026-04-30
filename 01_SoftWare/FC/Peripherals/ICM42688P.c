@@ -19,7 +19,7 @@ uint8_t ICM42688P_Init(void)
   ICM42688P_WriteReg(IMU1_PWR_MGMT0_REG, 0x0FU);        //Low Noise 模式
   ICM42688P_WriteReg(IMU1_GYRO_CONFIG0_REG, 0x06U);     
   ICM42688P_WriteReg(IMU1_ACCEL_CONFIG0_REG, 0x06U);
-  HAL_Delay(10);
+  HAL_Delay(100);
 
   return ICM42688P_ReadWhoAmI();                                    //读验证
 }
