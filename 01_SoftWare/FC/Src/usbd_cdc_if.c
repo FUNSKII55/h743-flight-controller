@@ -48,6 +48,7 @@ static volatile uint8_t cdc_dtr_state = 0;
 static uint8_t  cdc_rx_ring[CDC_RX_RING_SIZE];
 static volatile uint16_t cdc_rx_head = 0;
 static volatile uint16_t cdc_rx_tail = 0;
+volatile uint32_t usb_diag_irq_count = 0;
 
 /* USER CODE END PV */
 

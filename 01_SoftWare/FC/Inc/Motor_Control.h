@@ -8,6 +8,9 @@ extern "C" {
 #include "main.h"
 
 void Motor_Test_Run(void);
+void Motor_Init(void);
+uint8_t Motor_Write(uint16_t motor1, uint16_t motor2, uint16_t motor3, uint16_t motor4);
+void Motor_Stop(void);
 
 #ifdef __cplusplus
 }

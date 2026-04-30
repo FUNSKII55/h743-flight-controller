@@ -364,10 +364,6 @@ static void Get_SerialNum(void)
   uint32_t deviceserial1;
   uint32_t deviceserial2;
 
-  deviceserial0 = *(uint32_t *)(UID_BASE);
-  deviceserial1 = *(uint32_t *)(UID_BASE + 0x04U);
-  deviceserial2 = *(uint32_t *)(UID_BASE + 0x08U);
-
   deviceserial0 += deviceserial2;
 
   if (deviceserial0 != 0)

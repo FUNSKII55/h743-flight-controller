@@ -1,4 +1,5 @@
 04_Materials/
+01_SoftWare/02_Firmware/
 
 # Keil / MDK
 *.o
@@ -20,3 +21,7 @@
 Thumbs.db
 
 01_SoftWare/FC/MDK-ARM/FC/
+01_SoftWare/FC/build/
+01_SoftWare/FC/mx.scratch/
+01_SoftWare/FC/.settings/
+01_SoftWare/FC/.vscode/

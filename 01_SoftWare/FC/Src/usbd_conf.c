@@ -41,14 +41,6 @@
 PCD_HandleTypeDef hpcd_USB_OTG_FS;
 void Error_Handler(void);
 
-/* Diagnostic counters — watch these in Keil debugger to trace USB enumeration */
-volatile uint32_t usb_diag_irq_count    = 0;  /* USB interrupt fired */
-volatile uint32_t usb_diag_reset_count  = 0;  /* USB bus reset received */
-volatile uint32_t usb_diag_setup_count  = 0;  /* SETUP packet received */
-volatile uint32_t usb_diag_suspend_count = 0; /* Device entered suspend */
-volatile uint32_t usb_diag_connect_count = 0; /* Device connect event */
-volatile uint32_t usb_diag_pwr_ready    = 0; /* 1=USB33RDY set, 0=timeout */
-
 /* External functions --------------------------------------------------------*/
 
 /* USER CODE BEGIN 0 */
@@ -84,21 +76,15 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
   /** Initializes the peripherals clock
   */
     PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USB;
-    PeriphClkInitStruct.UsbClockSelection = RCC_USBCLKSOURCE_PLL;
+    PeriphClkInitStruct.UsbClockSelection = RCC_USBCLKSOURCE_HSI48;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
     {
       Error_Handler();
     }
 
-  /** Enable USB Voltage detector and wait for supply ready
+  /** Enable USB Voltage detector
   */
     HAL_PWREx_EnableUSBVoltageDetector();
-    /* Wait until USB 3.3V supply is confirmed stable (USB33RDY) */
-    {
-      uint32_t wait = 0U;
-      while (!(PWR->CR3 & PWR_CR3_USB33RDY) && (wait < 100000U)) { wait++; }
-      usb_diag_pwr_ready = (PWR->CR3 & PWR_CR3_USB33RDY) ? 1U : 0U;
-    }
 
     __HAL_RCC_GPIOA_CLK_ENABLE();
     /**USB_OTG_FS GPIO Configuration
@@ -109,17 +95,14 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF10_OTG2_FS;
+    GPIO_InitStruct.Alternate = GPIO_AF10_OTG1_FS;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
     /* Peripheral clock enable */
     __HAL_RCC_USB_OTG_FS_CLK_ENABLE();
 
-    /* Peripheral interrupt init — use priority 4, which is above FreeRTOS's
-       configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY (5).  This guarantees the
-       USB interrupt is never masked by FreeRTOS critical sections / task
-       switches, preventing enumeration timeouts. */
-    HAL_NVIC_SetPriority(OTG_FS_IRQn, 4, 0);
+    /* Peripheral interrupt init */
+    HAL_NVIC_SetPriority(OTG_FS_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(OTG_FS_IRQn);
   /* USER CODE BEGIN USB_OTG_FS_MspInit 1 */
 
@@ -163,7 +146,6 @@ static void PCD_SetupStageCallback(PCD_HandleTypeDef *hpcd)
 void HAL_PCD_SetupStageCallback(PCD_HandleTypeDef *hpcd)
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 {
-  usb_diag_setup_count++;
   USBD_LL_SetupStage((USBD_HandleTypeDef*)hpcd->pData, (uint8_t *)hpcd->Setup);
 }
 
@@ -222,7 +204,6 @@ static void PCD_ResetCallback(PCD_HandleTypeDef *hpcd)
 void HAL_PCD_ResetCallback(PCD_HandleTypeDef *hpcd)
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 {
-  usb_diag_reset_count++;
   USBD_SpeedTypeDef speed = USBD_SPEED_FULL;
 
   if ( hpcd->Init.speed == PCD_SPEED_HIGH)
@@ -256,7 +237,6 @@ static void PCD_SuspendCallback(PCD_HandleTypeDef *hpcd)
 void HAL_PCD_SuspendCallback(PCD_HandleTypeDef *hpcd)
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 {
-  usb_diag_suspend_count++;
   /* Inform USB library that core enters in suspend Mode. */
   USBD_LL_Suspend((USBD_HandleTypeDef*)hpcd->pData);
   __HAL_PCD_GATE_PHYCLOCK(hpcd);
@@ -329,7 +309,6 @@ static void PCD_ConnectCallback(PCD_HandleTypeDef *hpcd)
 void HAL_PCD_ConnectCallback(PCD_HandleTypeDef *hpcd)
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 {
-  usb_diag_connect_count++;
   USBD_LL_DevConnected((USBD_HandleTypeDef*)hpcd->pData);
 }
 
